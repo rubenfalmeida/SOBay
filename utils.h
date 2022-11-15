@@ -7,6 +7,7 @@ typedef struct
 
 typedef struct 
 {
+    int id;
     char nome[100];
     char categoria[100];
     int preco;
