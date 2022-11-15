@@ -19,7 +19,7 @@ int main()
     }
      FILE *FPROMOTORS;
 
-    FUSERS = fopen("promotors.txt", "r+");
+    FUSERS = fopen("promotors.txt", "r+"); //Aqui não será FPROMOTORS em vez de FUSERS?
 
     if(FUSERS == NULL){
         printf("erro de abertura promotores"); // debug caso o ficheiro não funcione
@@ -28,7 +28,7 @@ int main()
     }
      FILE *FITEMS;
 
-    FUSERS = fopen("items.txt", "r+");
+    FUSERS = fopen("items.txt", "r+"); //Aqui não será FITEMS em vez de FUSERS?
 
     if(FUSERS == NULL){
         printf("erro de abertura items"); // debug caso o ficheiro não funcione
