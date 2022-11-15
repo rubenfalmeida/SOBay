@@ -6,6 +6,55 @@
 #include <time.h>
 #include "utils.h"
 
+char *comandosconhecidos[] = {"users", "list", "kick", "prom"
+, "reprom", "cancel", "close"}; //Array para os tipos de comandos válidos para o administrador
+
+void ComparaComandos(char *comando)
+{
+    char palavras[2][20]; //Array onde serão guardadas as palavras dos comandos
+    int n = 0, //numero de palavras em cada comando
+    flag = 0; //Flag auxiliar na validação do comando (se a flag sair do ciclo = 0, comando é inválido)
+
+    for(comando = strtok(comando," ");comando != NULL;comando = strtok(NULL," "))
+    {
+        strcpy(palavras[n],comando);
+        n++;
+    }
+
+    for(int i = 0; i < 7; i++)
+    {
+        if(strcmp(palavras[0],comandosconhecidos[i]) == 0)
+        {
+            printf("Comando Validado!\n");
+            flag = 1;
+            break;
+        }
+    }
+
+    if(flag == 0)
+    {
+        printf("Comando Invalido!\n");
+    }
+}
+
+void IntroduzirComando()
+{
+    char comando[100];
+    while(1)
+    {
+        printf("Introduza o comando: ");
+        fgets(comando,100,stdin);
+        comando[strlen(comando) - 1] = '\0';
+        if(strcmp(comando,"close") == 0)
+        {
+            printf("Ate breve!\n");
+            exit(1);
+        }
+
+        ComparaComandos(comando);
+    }
+}
+
 int main()
 {   
     FILE *FUSERS;
@@ -36,87 +85,33 @@ int main()
         exit(1);
     }
 
-    char comando[6][256];
-    char *comandosconhecidos[] = {"users", "list", "kick", "prom", "reprom", "cancel", "close"};
-    char *funcionalidades[] = {"comandos", "execucaopromotor", "utilizadores", "itens"};
-    char teste[256];
+    int escolha;
+    char confirm;
 
-    while (1)
+    printf("Escolha a opcao:\n1 - Comando\n2 - Executar Promotor\n3 - Utilizadores\n4 - Itens\n");
+    scanf("%d",&escolha);
+    switch (escolha)
     {
-        printf("deseja testar que funcionalidade: ");
-        scanf("%s", teste);
-
-        for (int i = 0; i < 11; i++)
-        {
-            if (strcmp(teste, funcionalidades[i]) == 0)
+        case 1:
+            printf("Tem a certeza (s/n)?: ");
+            scanf(" %c",&confirm);
+            if(confirm == 's')
             {
-                if (strlen(teste) == 8)
-                {
-                    printf("Introduza o comando: ");
-                    scanf("%s", comando);
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (strcmp(comando[0], comandosconhecidos[i]) == 0)
-                        {
-
-                            printf("Comando validado!\n");
-                            exit(1);
-                        }
-                        else if (strcmp(comando[0], "exit") == 0)
-                        {
-                            printf("Ate a proxima!\n");
-                            exit(1);
-                        }
-                    }
-                }
+                IntroduzirComando();
             }
-
-            if (strcmp(teste, funcionalidades[i]) == 0)
+            else if(confirm == 'n')
             {
-                if (strlen(teste) == 8)
-                {
-                    printf("Introduza o comando: ");
-                    scanf("%s", comando);
-                    for (int i = 0; i < 10; i++)
-                    {
-                        if (strcmp(comando[0], comandosconhecidos[i]) == 0)
-                        {
-
-                            printf("Comando validado!\n");
-                            exit(1);
-                        }
-                        else if (strcmp(comando[0], "exit") == 0)
-                        {
-                            printf("Ate a proxima!\n");
-                            exit(1);
-                        }
-                    }
-                }
-
-                if (strlen(teste) == 16)
-                {
-                    printf(" A executar o promotor! ");
-                    scanf("%s", comando);
-
-                }
-
-                 if (strlen(teste) == 12)
-                {
-                    printf(" Os utilizadores ");
-                    scanf("%s", comando);
-
-                }
-                 if (strlen(teste) == 5)
-                {
-                    printf(" ITENS");
-                    scanf("%s", comando);
-
-                }
-
+                break;
             }
-            
-        }
-
-        printf("Comando invalido!\n");
+            else
+            {
+                printf("Escolha Invalida! (sintaxe: s/n)\n");
+                break;
+            }
+        case 2:
+        case 3:
+        case 4:
+        default:
+            break;
     }
 }
